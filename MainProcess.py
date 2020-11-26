@@ -28,6 +28,7 @@ def get_data(soup):
     timeList1 = []      # 업무 날짜
     timeList2 = []      # 업무 시간
     detailList = []     # 조건, 학력, 지역
+    urlList = []        # 세부링크
 
     dataList = []       # 모든 데이타 총합
     for content in range(1, 11):
@@ -52,8 +53,12 @@ def get_data(soup):
             imsiDetail = pList2[2].text.split()
             detailList.append(str(imsiDetail[0] + ' | ' + imsiDetail[1] + ' | ' + imsiDetail[2] + ' ' + imsiDetail[3] + ' ' + imsiDetail[4]))
 
+            urlList.append("https://www.work.go.kr" + tdList[2].find('div', {'class': 'cp-info-in'}).find('a')["href"])
+
             currentLine = content - 1
-            dataList.append([titleList[currentLine], payList[currentLine], timeList1[currentLine], timeList2[currentLine], taskList[currentLine], detailList[currentLine]])
+            dataList.append([titleList[currentLine], payList[currentLine], timeList1[currentLine], timeList2[currentLine], taskList[currentLine], detailList[currentLine], urlList[currentLine]])
+
+
         except:
             print("error")
     return dataList
